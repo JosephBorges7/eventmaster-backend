@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => array_filter(array_map('trim', explode(',', env('CORS_ORIGINS', '')))) ?: ['*'],
+    'allowed_origins' => array_filter(array_map('trim', explode(',', (string) (env('CORS_ORIGINS') ?? '')))) ?: ['*'],
 
     'allowed_origins_patterns' => [],
 
@@ -29,6 +29,6 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => (bool) env('CORS_CREDENTIALS', true),
+    'supports_credentials' => filter_var(env('CORS_CREDENTIALS') ?? true, FILTER_VALIDATE_BOOLEAN),
 
 ];
