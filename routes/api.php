@@ -9,6 +9,7 @@ use App\Http\Controllers\LocalController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminOnly;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 
 Route::post('/signup', [AuthController::class, 'signup']);
@@ -26,6 +27,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/users', [UserController::class, 'index']);
         Route::post('/users', [UserController::class, 'store']);
         Route::patch('/users/{user}/role', [UserController::class, 'updateRole']);
+
+        Route::get('/admins', [AdminController::class, 'index']);
+        Route::post('/admins', [AdminController::class, 'store']);
+        Route::patch('/admins/{user}', [AdminController::class, 'promote']);
+        Route::delete('/admins/{user}', [AdminController::class, 'demote']);
     }); 
 
     // Normal user routes
