@@ -13,6 +13,12 @@ use App\Http\Middleware\AdminOnly;
 use App\Http\Middleware\OrganizerOnly;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CartController;
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('cart', CartController::class);
+});
 
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
