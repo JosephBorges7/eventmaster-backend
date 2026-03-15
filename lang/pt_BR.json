@@ -24,5 +24,8 @@
     "Admin created successfully.": "Administrador criado com sucesso.",
     "Admin role not configured.": "Papel de administrador não está configurado.",
     "User promoted to admin successfully.": "Usuário promovido a administrador com sucesso.",
-    "User removed from admin successfully.": "Usuário removido do papel de administrador com sucesso."
+    "User removed from admin successfully.": "Usuário removido do papel de administrador com sucesso.",
+    "Item added to cart.": "Item adicionado ao carrinho.",
+    "Cart updated successfully.": "Carrinho atualizado com sucesso.",
+    "Item removed from cart.": "Item removido do carrinho."
 }

@@ -41,6 +41,11 @@ class User extends Authenticatable
         return $this->hasMany(Ticket::class, 'id_user');
     }
 
+    public function cartItems(): HasMany
+    {
+        return $this->hasMany(CartItem::class, 'id_user');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

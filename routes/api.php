@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminOnly;
 use App\Http\Middleware\OrganizerOnly;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 
 Route::post('/signup', [AuthController::class, 'signup']);
@@ -53,5 +54,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::delete('/user', [AuthController::class, 'destroyAccount']);
-    
+
+    // Cart (authenticated user's own cart)
+    Route::apiResource('/cart', CartController::class)->only(['index', 'store', 'update', 'destroy']);
 });
