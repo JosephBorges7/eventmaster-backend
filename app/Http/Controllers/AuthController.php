@@ -121,8 +121,8 @@ class AuthController extends Controller
     public function destroyAccount(Request $request): JsonResponse
     {
         $user = $request->user();
-        $user->tokens()->delete();
-        $user->delete();
+        $this->authorize('deleteSelf', $user);
+        $user->deleteAccount();
 
         return response()->json([
             'message' => __('Account deleted successfully.'),

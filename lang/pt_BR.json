@@ -8,6 +8,7 @@
     "Unauthenticated.": "Não autenticado.",
     "Unauthorized.": "Não autorizado.",
     "Record not found.": "Registro não encontrado.",
+    "User not found.": "Usuário não encontrado.",
     "Event created successfully.": "Evento criado com sucesso.",
     "Event category created successfully.": "Categoria de evento criada com sucesso.",
     "Local created successfully.": "Local criado com sucesso.",
@@ -27,5 +28,10 @@
     "User removed from admin successfully.": "Usuário removido do papel de administrador com sucesso.",
     "Item added to cart.": "Item adicionado ao carrinho.",
     "Cart updated successfully.": "Carrinho atualizado com sucesso.",
-    "Item removed from cart.": "Item removido do carrinho."
+    "Item removed from cart.": "Item removido do carrinho.",
+    "User deleted successfully.": "Usuário excluído com sucesso.",
+    "You cannot delete the root user.": "Você não pode excluir o usuário root.",
+    "You cannot delete yourself from the user management panel.": "Você não pode excluir a si mesmo pelo painel de usuários.",
+    "You cannot delete the last admin.": "Você não pode excluir o último administrador.",
+    "Only admins can delete users.": "Apenas administradores podem excluir usuários."
 }

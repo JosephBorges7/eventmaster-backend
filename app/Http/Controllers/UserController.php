@@ -125,4 +125,15 @@ class UserController extends Controller
             ],
         ]);
     }
+
+    /**
+     * Delete a user (admin only). Policy enforces: no root, no self, keep last admin.
+     */
+    public function destroy(User $user): JsonResponse
+    {
+        $this->authorize('delete', $user);
+        $user->deleteAccount();
+
+        return response()->json(['message' => __('User deleted successfully.')]);
+    }
 }

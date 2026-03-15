@@ -7,6 +7,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -28,7 +29,24 @@ return Application::configure(basePath: dirname(__DIR__))
         });
         $exceptions->renderable(function (ModelNotFoundException $e, Request $request) {
             if ($request->is('api/*') || $request->expectsJson()) {
-                return response()->json(['message' => __('Record not found.')], 404);
+                $message = $e->getModel() === \App\Models\User::class
+                    ? __('User not found.')
+                    : __('Record not found.');
+
+                return response()->json(['message' => $message], 404);
+            }
+        });
+        // Laravel converts ModelNotFoundException to NotFoundHttpException before render;
+        // handle it so API gets clean JSON instead of the framework message + trace.
+        $exceptions->renderable(function (NotFoundHttpException $e, Request $request) {
+            if (($request->is('api/*') || $request->expectsJson()) && $e->getStatusCode() === 404) {
+                $msg = $e->getMessage();
+                if (str_contains($msg, 'App\Models\User') || str_contains($msg, 'App\\\\Models\\\\User')) {
+                    return response()->json(['message' => __('User not found.')], 404);
+                }
+                if (str_contains($msg, 'No query results for model')) {
+                    return response()->json(['message' => __('Record not found.')], 404);
+                }
             }
         });
     })->create();

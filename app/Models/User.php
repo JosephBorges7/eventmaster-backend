@@ -79,10 +79,29 @@ class User extends Authenticatable
     }
 
     /**
+     * Verify if the user is a root user.
+     * @return bool
+     */
+    public function isRoot(): bool
+    {
+        return $this->role->name === 'root';
+    }
+
+    /**
      * Verify if the user is an organizer.
      */
     public function isOrganizer(): bool
     {
         return $this->role->name === 'organizer';
+    }
+
+    /**
+     * Revoke all tokens and delete the user. Use for both self-deletion and admin deletion.
+     */
+    public function deleteAccount(): bool
+    {
+        $this->tokens()->delete();
+
+        return $this->delete();
     }
 }

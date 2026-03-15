@@ -31,6 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/users', [UserController::class, 'index']);
         Route::post('/users', [UserController::class, 'store']);
         Route::patch('/users/{user}/role', [UserController::class, 'updateRole']);
+        Route::delete('/users/{user}', [UserController::class, 'destroy']);
 
         Route::get('/admins', [AdminController::class, 'index']);
         Route::post('/admins', [AdminController::class, 'store']);
@@ -49,7 +50,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('/locals', LocalController::class)->only(['store']);
         Route::apiResource('/event-categories', EventCategoryController::class)->only(['store']);
     });
-
+    
     // Normal user routes
     Route::get('/user', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
