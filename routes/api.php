@@ -57,5 +57,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/user', [AuthController::class, 'destroyAccount']);
 
     // Cart (authenticated user's own cart)
-    Route::apiResource('/cart', CartController::class)->only(['index', 'store', 'update', 'destroy']);
+    Route::apiResource('/cart', CartController::class)
+        ->only(['index', 'store', 'update', 'destroy'])
+        ->parameters(['cart' => 'cartItem']);
 });
