@@ -12,7 +12,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminOnly;
 use App\Http\Middleware\OrganizerOnly;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CartCheckoutController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\MercadoPagoWebhookController;
 use App\Http\Controllers\OrganizerRequestController;
 use App\Http\Controllers\UserController;
 
@@ -27,6 +29,8 @@ Route::get('/events', [EventController::class, 'index']);
 Route::get('/events/{event}', [EventController::class, 'show']);
 
 Route::post('/organizer-requests', [OrganizerRequestController::class, 'store']);
+
+Route::any('/webhooks/mercado-pago', MercadoPagoWebhookController::class);
 
 Route::middleware('auth:sanctum')->group(function () {
     // Admin routes
@@ -68,4 +72,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/cart', CartController::class)
         ->only(['index', 'store', 'update', 'destroy'])
         ->parameters(['cart' => 'cartItem']);
+
+    Route::post('/cart/checkout', CartCheckoutController::class);
 });
