@@ -103,4 +103,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/cart/checkout', CartCheckoutController::class);
 });
 
-Route::apiResource('staffs', StaffController::class);
+
+Route::middleware(['auth:sanctum', OrganizerOnly::class])->group(function (){
+    Route::apiResource('staffs', StaffController::class);
+});
