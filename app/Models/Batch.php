@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Batch extends Model
 {
     protected $fillable = [
+        'id_event',
         'price',
         'initial_date',
         'end_date',
@@ -23,5 +25,10 @@ class Batch extends Model
     public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class, 'id_batch');
+    }
+
+    public function event(): BelongsTo
+    {
+        return $this->belongsTo(Event::class, 'id_event');
     }
 }
