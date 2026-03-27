@@ -18,6 +18,7 @@ use App\Http\Controllers\MercadoPagoWebhookController;
 use App\Http\Controllers\OrganizerRequestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\CheckinController;
 use App\Http\Controllers\UserTicketController;
 
 Route::post('/signup', [AuthController::class, 'signup']);
@@ -110,6 +111,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::middleware(['auth:sanctum', OrganizerOnly::class])->group(function (){
     Route::apiResource('staffs', StaffController::class);
+    Route::post('checkin', [CheckinController::class, 'store']);
 });
 
 Route::post('/tickets/validate', [UserTicketController::class, 'validateTicket']);
+
