@@ -34,7 +34,10 @@ class OrganizerRequestController extends Controller
             ], 422);
         }
 
-        $organizerRequest = OrganizerRequest::create($validator->validated());
+        $organizerRequest = OrganizerRequest::create([
+            ...$validator->validated(),
+            'status_changed_at' => now(),
+        ]);
 
         return response()->json([
             'message' => __('Organizer request submitted successfully.'),
@@ -121,10 +124,15 @@ class OrganizerRequestController extends Controller
             if (! $user->isOrganizer()) {
                 $user->id_role = $role->id;
                 $user->name = $organizerRequest->name;
+                $user->phone_number = $organizerRequest->phone_number;
+                $user->reason = $organizerRequest->reason;
                 $user->save();
             }
 
-            $organizerRequest->update(['status' => 'approved']);
+            $organizerRequest->update([
+                'status' => 'approved',
+                'status_changed_at' => now(),
+            ]);
             $user->refresh();
             $user->load('role');
 
@@ -137,6 +145,8 @@ class OrganizerRequestController extends Controller
                     'name' => $user->name,
                     'cpf' => $user->cpf,
                     'email' => $user->email,
+                    'phone_number' => $user->phone_number,
+                    'reason' => $user->reason,
                 ],
                 'existing_account' => true,
             ]);
@@ -149,10 +159,15 @@ class OrganizerRequestController extends Controller
             'name' => $organizerRequest->name,
             'cpf' => $organizerRequest->cpf,
             'email' => $organizerRequest->email,
+            'phone_number' => $organizerRequest->phone_number,
+            'reason' => $organizerRequest->reason,
             'password' => Hash::make($temporaryPassword),
         ]);
 
-        $organizerRequest->update(['status' => 'approved']);
+        $organizerRequest->update([
+            'status' => 'approved',
+            'status_changed_at' => now(),
+        ]);
 
         $user->load('role');
 
@@ -165,6 +180,8 @@ class OrganizerRequestController extends Controller
                 'name' => $user->name,
                 'cpf' => $user->cpf,
                 'email' => $user->email,
+                'phone_number' => $user->phone_number,
+                'reason' => $user->reason,
             ],
             'existing_account' => false,
             'temporary_password' => $temporaryPassword,
@@ -182,7 +199,10 @@ class OrganizerRequestController extends Controller
             ], 422);
         }
 
-        $organizerRequest->update(['status' => 'rejected']);
+        $organizerRequest->update([
+            'status' => 'rejected',
+            'status_changed_at' => now(),
+        ]);
 
         return response()->json([
             'message' => __('Organizer request rejected successfully.'),

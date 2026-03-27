@@ -18,5 +18,6 @@ class OrganizerRequest extends Model
         'phone_number',
         'reason',
         'status',
+        'status_changed_at',
     ];
 }
